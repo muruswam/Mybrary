@@ -1,0 +1,22 @@
+<% if(locals.errorMessage != null) { %>
+    <h4><%= errorMessage %></h4>
+<% } %>
+
+<h2>All authors</h2>
+<br>
+<form action="/authors" method="GET" >
+<label>Name</label>
+<input type="text" name="name" id="name" >
+<button type="submit" > Search</button>
+</form>
+<br>
+<br>
+
+<div>
+    <h4>Authors </h4>
+    <ul>
+    <% if(locals.authors != null) { locals.authors.forEach(function(item)  { %>
+        <li><%= item.name%></li>
+    <% }) } %>
+    </ul>
+</div>

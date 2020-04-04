@@ -7,6 +7,7 @@ const app = express()
 const expressLayout = require("express-ejs-layouts")
 const indexRouter = require('./routes/index')
 const authorRouter = require('./routes/author')
+const bookRouter = require('./routes/book')
 const mongooseDB = require('mongoose')
 const bodyParser = require('body-parser')
 mongooseDB.connect(process.env.DATABASE_URL, { 
@@ -26,6 +27,7 @@ app.use(express.static('public'))
 app.use(bodyParser.urlencoded({limit: "10mb", extended: false}))
 app.use('/', indexRouter)
 app.use('/authors', authorRouter)
+app.use('/books', bookRouter)
 
 
 app.listen(process.env.SERVER_PORT || 3000)

@@ -16,7 +16,26 @@ const upload = multer({
 
 
 bookRouter.get('/', async (req, res) => {
-    res.render('book/index')
+    let books = []
+    try {
+        let query = Book.find()
+        if(req.query.title != null && req.query.title != ''){
+            query = query.regex('title', new RegExp(req.query.title, "i"))
+        }
+
+        if(req.query.publishedBefore != null && req.query.publishedBefore != ''){
+            query = query.lte('publishedDate', req.query.publishedBefore)
+        }
+
+        if(req.query.publishedAfter != null && req.query.publishedAfter != ''){
+            query = query.gte('publishedDate', req.query.publishedAfter)
+        }
+
+        books = await  query.exec()
+        res.render('book/index', { 'books': books})        
+    }catch(err){
+        res.render('book/index', { 'books': books, 'errorMessage': err})        
+    }
 })
 
 bookRouter.get('/new', async (req, res) => {

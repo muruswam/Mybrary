@@ -1,1 +1,7 @@
-Hi this is middle of the page
+<h3>Recently Added Books</h3>
+
+<div>
+    <% if(locals.books != null) {  books.forEach(function(book){ %>
+        <img src="<%= book.coverImagePath %>" width="150px" height="150px" />
+    <% })} %>
+ </div>

@@ -1,0 +1,9 @@
+<% if(locals.errorMessage != null) { %>
+    <%= locals.errorMessage %>
+<% } %>
+
+<form method="POST" action="/authors/<%=id%>?_method=PUT">
+    <label>Name</label>
+    <input type="text" name="name" id="name" value="<%= name %>"/>
+    <button type="submit" >Update</button>
+</form>

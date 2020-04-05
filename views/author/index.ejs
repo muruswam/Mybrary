@@ -14,9 +14,14 @@
 
 <div>
     <h4>Authors </h4>
-    <ul>
+    
     <% if(locals.authors != null) { locals.authors.forEach(function(item)  { %>
-        <li><%= item.name%></li>
-    <% }) } %>
-    </ul>
+        <span style="width: 200px"><%= item.name%> </span>
+        <a href="/authors/<%=item.id%>">View</a>
+        <a href="/authors/<%=item.id%>/edit">Update</a>
+        <form action="/authors/<%=item.id%>?_method=DELETE"   method="POST" >
+            <button type="submit"> Delete </button>
+        </form>
+    <% })} %>
+    
 </div>

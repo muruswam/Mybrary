@@ -45,4 +45,46 @@ authorRouter.post('/',  async (req, res) => {
     }
 })
 
+authorRouter.get('/:id', async (req, res) => {
+    const author = await Author.findById(req.params.id)
+
+    res.render("author/view" , {'id': req.params.id, 'name': author.name})
+})
+
+authorRouter.get('/:id/edit', async (req, res) => {
+
+    const author = await Author.findById(req.params.id)
+
+    res.render("author/edit" , {'id': req.params.id, 'name': author.name})
+})
+
+authorRouter.put('/:id', async (req, res) => {
+    
+    //res.send(req.body.name+" ---update author--- " + req.params.id)    
+    
+    try {
+        const author = await Author.findById(req.params.id)
+        if(author == null ) {
+            res.render("author/edit", {"errorMessage": "Update failed !!!", 'id': req.params.id, 'name': req.body.name})
+        }
+        if(req.body.name == null ){
+            res.render("author/edit", {"errorMessage": "Update failed, Name should not be empty !!!", 'id': req.params.id, 'name': req.body.name})
+        }
+
+        author.name = req.body.name
+
+        let updatedAuthor = await author.save()
+        res.redirect("/authors")
+    }catch(err){
+        res.render("author/edit", {"errorMessage": "Update failed !!!"+err, 'id': req.params.id, 'name': req.body.name})
+    }
+
+    
+})
+
+authorRouter.delete('/:id', (req, res) => {
+    res.send("delete author"+req.params.id)
+})
+
+
 module.exports = authorRouter

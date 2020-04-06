@@ -2,4 +2,19 @@
 
 <h2><%=name%></h2>
 
-<a href="/authors/<%=id%>/edit">Update</a> <a href="/authors/<%=id%>/delete">Delete</a>
+<div style="display: inline;">
+<a href="/authors/<%=id%>/edit">Update</a>          
+ <form action="/authors/<%=id%>?_method=DELETE"   method="POST" >
+    <button type="submit"> Delete </button>
+</form>
+</div>
+
+
+<div>
+    <h4>Books by Author </h4>
+        <div>
+            <% if(locals.books != null) {  books.forEach(function(book){ %>
+                <img src="<%= book.coverImagePath %>" width="150px" height="150px" />
+            <% })} %>
+         </div>
+</div>

@@ -43,7 +43,7 @@ bookRouter.get('/new', async (req, res) => {
     const book = await Book.find({})
     console.log(book)
 
-    renderBooks(res, new Book())
+    renderBooks(res, new Book(), 'new')
 })
 
 bookRouter.post('/', /*upload.single('cover'),*/ async (req, res) => {
@@ -65,10 +65,70 @@ bookRouter.post('/', /*upload.single('cover'),*/ async (req, res) => {
                 /*if(book.coverImageName != null)
                 removeBookCover(book.coverImageName)*/
 
-                renderBooks(res, book, true)
+                renderBooks(res, book, 'new', true)
             }
 })
 
+bookRouter.get('/:id', async (req, res) => {
+    try{
+    const book = await Book.findById(req.params.id)
+                           .populate('author')
+                           .exec()
+    console.log(book)
+    res.render('book/view', {'book': book})
+    }catch(e){
+        res.redirect("/books")
+    }
+})
+
+bookRouter.get('/:id/edit', async (req, res) => {
+    try{
+    const book = await Book.findById(req.params.id)
+    console.log(book)
+    await renderBooks(res, book, 'edit')
+    }catch(e){
+        res.redirect("/books")
+    }
+})
+
+bookRouter.put('/:id', async (req, res) => {
+    
+    let book = null;
+    try{
+    book = await Book.findById(req.params.id)
+    console.log(book)
+    
+    book.title  =  req.body.title    
+    book.publishedDate = new Date(req.body.publishedDate) 
+    book.pageCount = req.body.pageCount
+    book.description = req.body.description    
+    console.log("author get" + req.body.author )
+    book.author = req.body.author   
+    if(req.body.cover != null && req.body.cover != '')
+    saveBookCover(book, req.body.cover)
+    await book.save()
+    res.render(`book/view`, {'book': book})
+    }catch(e){
+        if(book != null ){
+            res.render('book/edit', {'book': book, "errorMessage": "Error in updating book  "+e})
+        }else {
+            res.redirect("/books")
+        }
+        
+    }
+
+})
+
+bookRouter.delete('/:id', async (req, res) => {
+    try{
+    const book = await Book.findById(req.params.id)
+    console.log(book)
+    await book.remove();
+    res.redirect("/books")
+    }catch(e){
+        res.redirect("/books")
+    }
+})
 
 function saveBookCover(book, enc){
             if(enc == null) return;
@@ -86,21 +146,27 @@ function saveBookCover(book, enc){
     })
 }*/
 
-async function renderBooks(res, book, isError = false){
+async function renderBooks(res, book, viewName,  isError = false){
     try {
         const authors = await Author.find({})
-        const book = new Book()
+        
         let params = {
             authors: authors,
             book: book
         }
 
-        if(isError == true)
-        params['errorMessage'] = 'Error in creating new book'
+        if(isError == true){
+            if(viewName == 'new')
+            params['errorMessage'] = 'Error in creating new book'
+            else
+            params['errorMessage'] = 'Error in updating new book'
+        }
+        
 
-        res.render("book/new", params)
+        res.render(`book/${viewName}`, params)
     }catch(err){
-        res.render("book/new")
+        console.err("errr               -> "+params)
+        res.redirect('/')
     }
 }
 

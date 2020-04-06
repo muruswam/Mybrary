@@ -1,0 +1,7 @@
+<% if(locals.errorMessage != null) { %>
+    <h4><%= errorMessage %></h4>
+<% } %>
+
+<form action="/books/<%= book.id %>?_method=PUT"  method="POST" >
+<%-  include('_form_fields.ejs')  %> 
+</form>

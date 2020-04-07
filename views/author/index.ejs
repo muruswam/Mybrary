@@ -2,7 +2,7 @@
     <h4><%= errorMessage %></h4>
 <% } %>
 
-<h2>All authors</h2>
+<h2 class="page-header">All authors</h2>
 <br>
 <form action="/authors" method="GET" >
 <label>Name</label>
@@ -17,11 +17,13 @@
     
     <% if(locals.authors != null) { locals.authors.forEach(function(item)  { %>
         <span style="width: 200px"><%= item.name%> </span>
-        <a href="/authors/<%=item.id%>">View</a>
-        <a href="/authors/<%=item.id%>/edit">Update</a>
+        <div class="btn-row">
+        <a  class="btn btn-primary" href="/authors/<%=item.id%>">View</a>
+        <a  class="btn btn-primary" href="/authors/<%=item.id%>/edit">Update</a>
         <form action="/authors/<%=item.id%>?_method=DELETE"   method="POST" >
-            <button type="submit"> Delete </button>
+            <button class="btn btn-danger" type="submit"> Delete </button>
         </form>
+        </div>
     <% })} %>
     
 </div>

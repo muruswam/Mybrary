@@ -2,6 +2,8 @@
 
 <div>
     <% if(locals.books != null) {  books.forEach(function(book){ %>
+        <a href="/books/<%=book.id%>">
         <img src="<%= book.coverImagePath %>" width="150px" height="150px" />
+        </a>
     <% })} %>
  </div>

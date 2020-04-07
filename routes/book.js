@@ -126,7 +126,14 @@ bookRouter.delete('/:id', async (req, res) => {
     await book.remove();
     res.redirect("/books")
     }catch(e){
-        res.redirect("/books")
+        if(book != null){
+            res.render('book/view', {
+                'book': book,
+                'errorMessage': 'Could not remove book, cause   - ' + e
+            })
+        }else {
+            res.redirect("/")
+        }
     }
 })
 

@@ -14,7 +14,9 @@
     <h4>Books by Author </h4>
         <div>
             <% if(locals.books != null) {  books.forEach(function(book){ %>
-                <img src="<%= book.coverImagePath %>" width="150px" height="150px" />
+                <a href="/books/<%= book.id %>">
+                    <img src="<%= book.coverImagePath %>" width="150px" height="150px" />
+                </a>
             <% })} %>
          </div>
 </div>

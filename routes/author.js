@@ -45,7 +45,8 @@ authorRouter.post('/',  async (req, res) => {
 authorRouter.get('/:id', async (req, res) => {
     try {
     const author = await Author.findById(req.params.id)
-    const books = await Book.find({author: author.id}).limit(2)
+    //const books = await Book.find({author: author.id}).limit(2)
+    const books = await Book.find({author: author.id})
     res.render("author/view" , {'id': req.params.id, 'name': author.name, 'books': books})
     }catch(e){
         console.log(e)

@@ -5,24 +5,34 @@
 <h2 class="page-header">All authors</h2>
 <br>
 <form action="/authors" method="GET" >
-<label>Name</label>
-<input type="text" name="name" id="name" >
-<button type="submit" > Search</button>
+<div class="form-row ">
+    <div class="form-item">
+        <label>Name</label>
+        <input type="text" name="name" id="name" >
+    </div>
+</div>
+<div>
+    <div class="form-row form-row-end">
+        <button class="btn btn-primary" type="submit" > Search</button>
+    </div>
+</div>
 </form>
 <br>
 <br>
 
 <div>
-    <h4>Authors </h4>
+    <h4 class="page-header">Authors </h4>
     
     <% if(locals.authors != null) { locals.authors.forEach(function(item)  { %>
-        <span style="width: 200px"><%= item.name%> </span>
-        <div class="btn-row">
-        <a  class="btn btn-primary" href="/authors/<%=item.id%>">View</a>
-        <a  class="btn btn-primary" href="/authors/<%=item.id%>/edit">Update</a>
-        <form action="/authors/<%=item.id%>?_method=DELETE"   method="POST" >
-            <button class="btn btn-danger" type="submit"> Delete </button>
-        </form>
+        <div class="author-row">
+            <div class="author-name"><%= item.name%></div>
+            <div class="btn-row">
+                <a  class="btn btn-primary" href="/authors/<%=item.id%>">View</a>
+                <a  class="btn btn-primary" href="/authors/<%=item.id%>/edit">Update</a>
+                <form action="/authors/<%=item.id%>?_method=DELETE"   method="POST" >
+                    <button class="btn btn-danger" type="submit"> Delete </button>
+                </form>
+            </div>
         </div>
     <% })} %>
     

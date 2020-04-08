@@ -1,9 +1,5 @@
 <h3 class="page-header">Recently Added Books</h3>
 
 <div>
-    <% if(locals.books != null) {  books.forEach(function(book){ %>
-        <a href="/books/<%=book.id%>">
-        <img src="<%= book.coverImagePath %>" width="150px" height="150px" />
-        </a>
-    <% })} %>
+    <%- include('partials/bookgrid.ejs', { 'books': books}) %>
  </div>

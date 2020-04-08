@@ -2,21 +2,15 @@
 
 <h2><%=name%></h2>
 
-<div style="display: inline;">
-<a href="/authors/<%=id%>/edit">Update</a>          
+<div class="btn-row">
+<a  class="btn btn-primary" href="/authors/<%=id%>/edit">Update</a>          
  <form action="/authors/<%=id%>?_method=DELETE"   method="POST" >
-    <button type="submit"> Delete </button>
+    <button class="btn btn-danger" type="submit"> Delete </button>
 </form>
 </div>
 
 
 <div>
-    <h4>Books by Author </h4>
-        <div>
-            <% if(locals.books != null) {  books.forEach(function(book){ %>
-                <a href="/books/<%= book.id %>">
-                    <img src="<%= book.coverImagePath %>" width="150px" height="150px" />
-                </a>
-            <% })} %>
-         </div>
+    <h4 class="page-header">Books by Author </h4>
+    <%- include('../partials/bookgrid.ejs', { 'books': books}) %>
 </div>

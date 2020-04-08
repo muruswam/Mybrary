@@ -4,28 +4,27 @@
     <h2><%= errorMessage %></h2>
 <% } %> 
 <form action="/books"  method="GET">
-    <div>
-        <label> Title</label>
-        <input type="text" name="title"  />
+    <div class="form-row">
+        <div class="form-item">
+            <label> Title</label>
+            <input type="text" name="title"  />
+        </div>
+        <div class="form-item">
+            <label>Published Before</label>
+            <input type="date" name="publishedBefore" />        
+        </div>
     </div>
-    <div>
-        <label>Published Before</label>
-        <input type="date" name="publishedBefore" />        
+    <div class="form-row">
+        <div class="form-item">
+            <label>Published After</label>
+            <input type="date" name="publishedAfter" />        
+        </div>
     </div>
-    <div>
-        <label>Published After</label>
-        <input type="date" name="publishedAfter" />        
+    <div class="form-row btn-row form-row-end" >
+        <button class="btn btn-primary" type="submit"> Search </button>
     </div>
-    <button type="button"> Cencel </button>
-    <button type="submit"> Search </button>
 </form>
-<br>
-
 
 <div>
-    <% if(locals.books != null) {  books.forEach(function(book){ %>
-        <a href="/books/<%=book.id%>">
-        <img src="<%= book.coverImagePath %>" width="150px" height="150px" />
-        </a>
-    <% })} %>
+    <%- include('../partials/bookgrid.ejs', { 'books': books}) %>
  </div>
